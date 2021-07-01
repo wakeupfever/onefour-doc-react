@@ -1,12 +1,21 @@
-// import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-// import logo from './assets/img/logo.svg'
+
+import { lazy, Suspense } from 'react'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 import './assets/scss/App.scss'
-import RouteConfig from './routes/index'
+
+const Recommend = lazy(() => import('./pages/recommend/index'))
 
 function App() {
   return (
     <div className="App">
-      <RouteConfig />
+      <Suspense fallback={<div>loading...</div>}>
+        <HashRouter>
+          <Switch>
+            <Route path="/recommend" component={Recommend}>
+            </Route>
+          </Switch>
+        </HashRouter>
+      </Suspense>
     </div>
   )
 }
