@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { HashRouter, Switch, Route } from 'react-router-dom'
-import asyncComponent from '../assets/ts/asyncComponent'
+import asyncComponent from '~/assets/ts/asyncComponent'
 
 const Recommend = asyncComponent(() => import('../pages/recommend/index'))
 

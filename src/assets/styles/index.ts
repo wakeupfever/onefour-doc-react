@@ -23,9 +23,9 @@ export const theme = {
 
 // 基础功能
 export const $bgImage = (url: string) => `
-    background-image: url(${url}});
+    background-image: url(${url});
     @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
-      background-image: url(${url}});
+      background-image: url(${url});
     }
   `
 // 禁止折行
