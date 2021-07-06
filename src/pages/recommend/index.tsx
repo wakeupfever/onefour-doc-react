@@ -1,12 +1,10 @@
-export interface RecommendProps {
-}
+import React from 'react'
 
-function recommend(): JSX.Element {
-  return (
-    <div className="recommend">
-      recommend
-    </div>
-  )
-}
+const recommend: React.FC = (): JSX.Element => (
+  <div className="recommend">
+    recommend
+  </div>
+)
+
 
 export default recommend

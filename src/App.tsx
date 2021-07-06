@@ -1,26 +1,96 @@
 
 import { lazy, Suspense } from 'react'
-import { HashRouter, Switch, Route } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
+import { BrowserRouter, Switch, Route, NavLink, Redirect } from 'react-router-dom'
+import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '~/assets/styles'
 
-const Recommend = lazy(() => import('~/pages/recommend/index'))
 const Header = lazy(() => import('~/components/header/index'))
-const Tab = lazy(() => import('~/components/tab/index'))
 
+const Recommend = lazy(() => import('~/pages/recommend/index'))
+const Search = lazy(() => import('~/pages/search/index'))
+const Singer = lazy(() => import('~/pages/singer/index'))
+const TopList = lazy(() => import('~/pages/topList/index'))
+
+interface Tabs {
+  name: string;
+  path: string;
+}
+
+export const DivAlias = styled.div`
+  display: flex;
+  height: 44px;
+  line-height: 44px;
+  font-size: ${(props: any) => props.theme.$fontSizeMedium};
+
+  .tab-item {
+    flex: 1;
+    text-align: center;
+
+    .tab-link {
+      padding-bottom: 5px;
+      color: ${(props: any) => props.theme.$colorTextL};
+    }
+
+    .router-link-active {
+      color: ${(props: any) => props.theme.$colorTheme};
+      border-bottom: 2px solid ${(props: any) => props.theme.$colorTheme};
+    }
+  }
+`
 function App() {
+  const tabs: Tabs[] = [
+    {
+      name: '推荐',
+      path: '/recommend',
+    },
+    {
+      name: '歌手',
+      path: '/singer',
+    },
+    {
+      name: '排行',
+      path: '/top-list',
+    },
+    {
+      name: '搜索',
+      path: '/search',
+    },
+  ]
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <Suspense fallback={<div>loading...</div>}>
           <Header />
-          <Tab />
-          <HashRouter>
+          <BrowserRouter>
+            <DivAlias>
+              {tabs.map((item) => (
+                <div className="tab-item" key={item.name}>
+                  <NavLink
+                    activeClassName="router-link-active"
+                    className="tab-link"
+                    to={item.path}
+                  >
+                    {item.name}
+                  </NavLink>
+                </div>
+              ))}
+              <Redirect from="/*" to="/recommend"></Redirect>
+            </DivAlias>
             <Switch>
-              <Route path="/" component={Recommend} />
-              <Route path="/recommend" component={Recommend} />
+              <Route path="/recommend">
+                <Recommend></Recommend>
+              </Route>
+              <Route path="/search">
+                <Search></Search>
+              </Route>
+              <Route path="/singer">
+                <Singer></Singer>
+              </Route>
+              <Route path="/top-list">
+                <TopList></TopList>
+              </Route>
             </Switch>
-          </HashRouter>
+          </BrowserRouter>
         </Suspense>
       </ThemeProvider>
     </div>
