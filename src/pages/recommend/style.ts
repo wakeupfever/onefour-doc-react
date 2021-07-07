@@ -28,8 +28,8 @@ export const RecommendDivAlias = styled.div`
         height: 65px;
         line-height: 65px;
         text-align: center;
-        font-size: $font-size-medium;
-        color: $color-theme;
+        font-size: ${(props: any) => props.theme.$fontSizeMedium};
+        color: ${(props: any) => props.theme.$colorTheme};
       }
       .item {
         display: flex;
@@ -49,14 +49,14 @@ export const RecommendDivAlias = styled.div`
           flex: 1;
           line-height: 20px;
           overflow: hidden;
-          font-size: $font-size-medium;
+          font-size: ${(props: any) => props.theme.$fontSizeMedium};
         }
         .name {
           margin-bottom: 10px;
-          color: $color-text;
+          color: ${(props: any) => props.theme.$colorText};
         }
         .title {
-          color: $color-text-d;
+          color: ${(props: any) => props.theme.$colorTextD};
         }
       }
     }

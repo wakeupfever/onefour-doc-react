@@ -1,4 +1,4 @@
-export const theme = {
+export let theme = {
   // 颜色定义规范
   $colorBackground: '#222',
   $colorBackgroundD: 'rgba(0, 0, 0, 0.3)',
