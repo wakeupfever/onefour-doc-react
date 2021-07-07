@@ -1,29 +1,22 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-// import { Route, BrowserRouter } from 'react-router-dom'
+import React, { useRef } from 'react'
 import { SliderDivAlias } from './style'
+import useSlider from './useSlider'
 
-interface SlidersData {
+export interface SlidersItem {
   link: string;
   pic: string
   id: string
 }
 
 interface SliderProps {
-  sliders: SlidersData[]
+  sliders: SlidersItem[]
 }
 
-const Header: React.FC<SliderProps> = ({ sliders }) => {
-  // const [sliders, useSliders] = useState<SlidersData[]>([])
-  const [currentPageIndex, useCurrentPageIndex] = useState<number>(0)
-  console.log(useCurrentPageIndex)
-  
-  useEffect(() => {
-    // useCurrentPageIndex(0)
-  }, [sliders])
-
+export const Slider: React.FC<SliderProps> = ({ sliders }) => {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const [currentPageIndex] = useSlider(rootRef)
   return (
-    <SliderDivAlias>
+    <SliderDivAlias ref={rootRef}>
       <div className="slider-group">
         {sliders.map((item, index) => (
           <div className="slider-page" key={index}>
@@ -32,18 +25,17 @@ const Header: React.FC<SliderProps> = ({ sliders }) => {
             </a>
           </div>
         ))}
-        <div className="dots-wrapper">
-          <span className="dot"></span>
-          {sliders.map((item, index) => (
-            <span
-              key={index}
-              className={currentPageIndex === index ? 'active' : ''}
-            ></span>
-          ))}
-        </div>
+      </div>
+      <div className="dots-wrapper">
+        {sliders.map((item, index) => (
+          <span
+            key={index}
+            className={[currentPageIndex === index ? 'active' : '', 'dot'].join(' ')}
+          ></span>
+        ))}
       </div>
     </SliderDivAlias>
   )
 }
 
-export default Header
+export default Slider
