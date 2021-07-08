@@ -4,16 +4,17 @@ import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll'
 import React, { useRef, useEffect } from 'react'
 
 interface ScrollProps {
-  options: {
-    click: boolean;
-    probeType: number;
-  };
-  setScroll: any;
+  options?: {
+    click: boolean
+    probeType: number
+  }
+  className: string
+  setScroll: Function
 }
 
 BScroll.use(ObserveDOM)
 
-const Scroll: React.FC<ScrollProps> = ({ options, setScroll, children }) => {
+const Scroll: React.FC<ScrollProps> = ({ options = { click: true, probeType: 0 }, setScroll, className = 'recommend-content', children }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const scrollVal: BScrollConstructor = new BScroll(
@@ -35,7 +36,7 @@ const Scroll: React.FC<ScrollProps> = ({ options, setScroll, children }) => {
   })
 
   return (
-    <div className="recommend-content" ref={wrapperRef}>
+    <div className={className} ref={wrapperRef}>
       {children}
     </div>
   )

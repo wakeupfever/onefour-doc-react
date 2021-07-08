@@ -31,8 +31,8 @@ const Recommend: React.FC = (): JSX.Element => {
   return (
     <RecommendDivAlias className="recommend">
       <Scroll
-        options={{ click: true, probeType: 0 }}
         setScroll={setScrollInfo}
+        className="recommend-content"
       >
         <div>
           <div className="slider-wrapper">
