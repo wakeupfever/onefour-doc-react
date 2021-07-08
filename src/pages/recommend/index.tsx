@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { SlidersItem, Slider } from '~/components/slider'
+import Scroll from '~/components/base/scroll'
 import { RecommendDivAlias } from './style'
 
 interface AlbumsItem {
@@ -10,7 +11,9 @@ interface AlbumsItem {
 const Recommend: React.FC = (): JSX.Element => {
   const [slider, setSlider] = useState<SlidersItem[]>([])
   const [albums, setAlbums] = useState<AlbumsItem[]>([])
-
+  const [scrollInfo, setScrollInfo] = useState<number>(0)
+  console.log(scrollInfo)
+  
   const init = async () => {
     const { code, result } = await fetch(
       'http://localhost:9002/api/getRecommend'
@@ -27,18 +30,21 @@ const Recommend: React.FC = (): JSX.Element => {
 
   return (
     <RecommendDivAlias className="recommend">
-      <div className="recommend-content">
+      <Scroll
+        options={{ click: true, probeType: 0 }}
+        setScroll={setScrollInfo}
+      >
         <div>
           <div className="slider-wrapper">
             <div className="slider-content">
-              {slider.length && <Slider sliders={slider}></Slider>}
+              {slider.length ? <Slider sliders={slider}></Slider> : null}
             </div>
           </div>
           <div className="recommend-list">
             <h1 className="list-title">热门歌单推荐</h1>
             <ul>
-              {albums.length &&
-                albums.map((item) => (
+              {albums.length
+                ? albums.map((item) => (
                   <li className="item" key={item.id}>
                     <div className="icon">
                       <img width="60" height="60" src={item.pic} alt="test" />
@@ -48,11 +54,12 @@ const Recommend: React.FC = (): JSX.Element => {
                       <p className="title">{item.title}</p>
                     </div>
                   </li>
-                ))}
+                ))
+                : null}
             </ul>
           </div>
         </div>
-      </div>
+      </Scroll>
     </RecommendDivAlias>
   )
 }
