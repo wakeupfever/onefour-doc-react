@@ -20,7 +20,6 @@ const useSlider = (wrapperRef: unknown) => {
     })
     
     sliderVal?.on('slideWillChange', (page: any) => {
-      console.log(page.pageX)
       setCurrentPageIndex(page.pageX)
     })
     return () => {

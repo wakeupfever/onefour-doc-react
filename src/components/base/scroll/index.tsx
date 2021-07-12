@@ -8,13 +8,14 @@ interface ScrollProps {
     click: boolean
     probeType: number
   }
-  className: string
+  style?: any
+  className?: string
   setScroll: Function
 }
 
 BScroll.use(ObserveDOM)
 
-const Scroll: React.FC<ScrollProps> = ({ options = { click: true, probeType: 0 }, setScroll, className = 'recommend-content', children }) => {
+const Scroll: React.FC<ScrollProps> = ({ options = { click: true, probeType: 0 }, setScroll, className = '', style = null, children }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const scrollVal: BScrollConstructor = new BScroll(
@@ -36,7 +37,7 @@ const Scroll: React.FC<ScrollProps> = ({ options = { click: true, probeType: 0 }
   })
 
   return (
-    <div className={className} ref={wrapperRef}>
+    <div className={className} ref={wrapperRef} style={style}>
       {children}
     </div>
   )

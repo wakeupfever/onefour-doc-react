@@ -7,13 +7,14 @@ import { theme } from '~/assets/styles'
 const Header = lazy(() => import('~/components/header/index'))
 
 const Recommend = lazy(() => import('~/pages/recommend/index'))
+const Album = lazy(() => import('~/pages/album/index'))
 const Search = lazy(() => import('~/pages/search/index'))
 const Singer = lazy(() => import('~/pages/singer/index'))
 const TopList = lazy(() => import('~/pages/topList/index'))
 
 interface Tabs {
-  name: string;
-  path: string;
+  name: string
+  path: string
 }
 
 export const DivAlias = styled.div`
@@ -77,8 +78,11 @@ function App() {
               <Redirect from="/*" to="/recommend"></Redirect>
             </DivAlias>
             <Switch>
-              <Route path="/recommend">
+              <Route exact path="/recommend">
                 <Recommend></Recommend>
+              </Route>
+              <Route path="/recommend/:id">
+                <Album></Album>
               </Route>
               <Route path="/search">
                 <Search></Search>

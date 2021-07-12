@@ -1,4 +1,29 @@
-export let theme = {
+interface ThemeStyled {
+  $colorBackground: string
+  $colorBackgroundD: string
+  $colorHighlightBackground: string
+  $colorDialogBackground: string
+  $colorTheme: string
+  $colorThemeD: string
+  $colorSubTheme: string
+  $colorText: string
+  $colorTextD: string
+  $colorTextL: string
+  $colorTextLl: string
+
+  $fontSizeSmallS: string
+  $fontSizeSmall: string
+  $fontSizeMedium: string
+  $fontSizeMediumX: string
+  $fontSizeLarge: string
+  $fontSizeLargeX: string
+}
+
+export interface ThemePropStyled {
+  theme: ThemeStyled
+}
+
+export let theme: ThemeStyled = {
   // 颜色定义规范
   $colorBackground: '#222',
   $colorBackgroundD: 'rgba(0, 0, 0, 0.3)',

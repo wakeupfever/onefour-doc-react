@@ -1,5 +1,7 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import storage from 'good-storage'
+import { useHistory } from 'react-router-dom'
+import { ALBUM_KEY } from '~/assets/ts/constant'
 import { SlidersItem, Slider } from '~/components/slider'
 import Scroll from '~/components/base/scroll'
 import { RecommendDivAlias } from './style'
@@ -8,10 +10,11 @@ interface AlbumsItem {
   [key: string]: string
 }
 
-const Recommend: React.FC = (): JSX.Element => {
+const Recommend: React.FC = ({ children }): JSX.Element => {
   const [slider, setSlider] = useState<SlidersItem[]>([])
   const [albums, setAlbums] = useState<AlbumsItem[]>([])
   const [scrollInfo, setScrollInfo] = useState<number>(0)
+  const history = useHistory()
   console.log(scrollInfo)
   
   const init = async () => {
@@ -24,16 +27,27 @@ const Recommend: React.FC = (): JSX.Element => {
       setAlbums(albums)
     }
   }
+
   useEffect(() => {
     init()
   }, [])
+  
+  const handleCacheAlbum = useCallback((album) => {
+    storage.session.set(ALBUM_KEY, album)
+  }, [])
+
+  const handleSelectItem = useCallback(
+    (album) => {
+      console.log(album)
+      handleCacheAlbum(album)
+      history.replace(`recommend/${album.id}`)
+    },
+    [handleCacheAlbum, history]
+  )
 
   return (
     <RecommendDivAlias className="recommend">
-      <Scroll
-        setScroll={setScrollInfo}
-        className="recommend-content"
-      >
+      <Scroll setScroll={setScrollInfo} className="recommend-content">
         <div>
           <div className="slider-wrapper">
             <div className="slider-content">
@@ -45,7 +59,11 @@ const Recommend: React.FC = (): JSX.Element => {
             <ul>
               {albums.length
                 ? albums.map((item) => (
-                  <li className="item" key={item.id}>
+                  <li
+                    className="item"
+                    onClick={() => handleSelectItem(item)}
+                    key={item.id}
+                  >
                     <div className="icon">
                       <img width="60" height="60" src={item.pic} alt="test" />
                     </div>
@@ -59,6 +77,7 @@ const Recommend: React.FC = (): JSX.Element => {
             </ul>
           </div>
         </div>
+        {children}
       </Scroll>
     </RecommendDivAlias>
   )
