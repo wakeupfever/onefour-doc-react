@@ -1,6 +1,6 @@
 
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Switch, Route, NavLink, Redirect } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom'
 import styled, { ThemeProvider } from 'styled-components'
 import { theme } from '~/assets/styles'
 
@@ -38,7 +38,8 @@ export const DivAlias = styled.div`
     }
   }
 `
-function App() {
+
+const App: React.FC = () => {
   const tabs: Tabs[] = [
     {
       name: '推荐',
@@ -75,7 +76,6 @@ function App() {
                   </NavLink>
                 </div>
               ))}
-              <Redirect from="/*" to="/recommend"></Redirect>
             </DivAlias>
             <Switch>
               <Route exact path="/recommend">
