@@ -6,7 +6,7 @@ import { SlidersItem, Slider } from '~/components/slider'
 import Scroll from '~/components/base/scroll'
 import { RecommendDivAlias } from './style'
 
-interface AlbumsItem {
+export interface AlbumsItem {
   [key: string]: string
 }
 
