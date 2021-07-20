@@ -58,6 +58,7 @@ const App: React.FC = () => {
       path: '/search',
     },
   ]
+  
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
@@ -78,6 +79,9 @@ const App: React.FC = () => {
               ))}
             </DivAlias>
             <Switch>
+              <Route exact path="/">
+                <Recommend></Recommend>
+              </Route>
               <Route exact path="/recommend">
                 <Recommend></Recommend>
               </Route>
