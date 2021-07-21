@@ -28,7 +28,7 @@ export const MusicListDivAlias = styled.div`
     text-align: center;
     line-height: 40px;
     font-size: ${(props: ThemePropStyled) => props.theme.$fontSizeLarge};
-    color: $color-text;
+    color: ${(props: ThemePropStyled) => props.theme.$colorText};
   }
   .bg-image {
     position: relative;

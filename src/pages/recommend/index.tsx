@@ -11,7 +11,7 @@ export interface AlbumsItem {
   [key: string]: string
 }
 
-const Recommend: React.FC = ({ children }): JSX.Element => {
+const Recommend: React.FC = (): JSX.Element => {
   const [slider, setSlider] = useState<SlidersItem[]>([])
   const [albums, setAlbums] = useState<AlbumsItem[]>([])
   const [scrollInfo, setScrollInfo] = useState<number>(0)
@@ -28,12 +28,9 @@ const Recommend: React.FC = ({ children }): JSX.Element => {
       history.replace('/recommend')
       return
     }
-    const { code, result } = await getRecommend()
-    if (code === 0) {
-      const { sliders, albums } = result
-      setSlider(sliders)
-      setAlbums(albums)
-    }
+    const { sliders, albums } = await getRecommend()
+    setSlider(sliders)
+    setAlbums(albums)
   }, [params, history])
   
   /** 
@@ -93,7 +90,6 @@ const Recommend: React.FC = ({ children }): JSX.Element => {
             </ul>
           </div>
         </div>
-        {children}
       </Scroll>
     </RecommendDivAlias>
   )

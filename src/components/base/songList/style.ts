@@ -5,7 +5,7 @@ import first from '~/assets/images/first@2x.png'
 import second from '~/assets/images/second@2x.png'
 import third from '~/assets/images/third@2x.png'
 
-export const SongListDivAlias = styled.div`
+export const SongListUlAlias = styled.ul`
 .item {
   display: flex;
   align-items: center;
