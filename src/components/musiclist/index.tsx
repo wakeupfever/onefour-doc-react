@@ -1,6 +1,7 @@
+import { useMemo } from 'react'
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { SongItem } from '~/pages/album'
-import Scroll from '../base/scroll'
+import Scroll, { ScrollPos } from '../base/scroll'
 import SongList from '../base/songList'
 import { MusicListDivAlias } from './style'
 
@@ -15,17 +16,15 @@ const RESERVED_HEIGHT = 40
 
 const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
   const bgImage = useRef<HTMLDivElement>(null)
+  const [bgImageStyle, setBgImageStyle] = useState<{ [key: string]: string | number }>({})
+  const [scrollY, setScrollY] = useState<number>(0)
   const [imageHeight, setImageHeight] = useState<number>(0)
   const [maxTranslateY, setMaxTranslateY] = useState<number>(0)
-  const [scrollY] = useState<number>(0)
-  const [bgImageStyle, setBgImageStyle] = useState<{ [key: string]: string | number }>({})
-  const [playBtnStyle] = useState(undefined)
-  const [filterStyle] = useState(undefined)
-  const [scrollStyle, setScrollStyle] = useState<{ [key: string]: string | number }>({})
 
-  const onScroll = useCallback(() => {
-    console.log('onscroll')
-  }, [])
+  const onScroll = (pos: ScrollPos) => {
+    setScrollY(-pos.y)
+    console.log(pos)
+  }
 
   const handleGoBack = useCallback(() => {
     console.log('back')
@@ -35,27 +34,81 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
     console.log('random')
   }, [])
 
-  /** 
-   * @type {*}
-   * @description 初始化详情列表 style
-   */
-  const initScrollStyle = useCallback(() => {
+  const filterStyle = useMemo(() => {
+    let blur = 0
+    if (scrollY >= 0) {
+      blur =
+        Math.min(maxTranslateY / imageHeight, scrollY / imageHeight) *
+        20
+    }
+    return {
+      backdropFilter: `blur(${blur}px)`,
+    }
+  }, [scrollY, imageHeight, maxTranslateY])
+
+  const playBtnStyle = useMemo(() => {
+    let display = ''
+    if (scrollY >= maxTranslateY) {
+      display = 'none'
+    }
+    return { display }
+  }, [maxTranslateY, scrollY])
+  
+  // const initBgImageStyle = useCallback(() => {
+  //   let zIndex = 0
+  //   let paddingTop = '70%'
+  //   let height = '0'
+  //   let translateZ = 0
+  //   console.log(scrollY)
+
+  //   if (scrollY > maxTranslateY) {
+  //     zIndex = 10
+  //     paddingTop = '0'
+  //     height = `${RESERVED_HEIGHT}px`
+  //     translateZ = 1
+  //   }
+
+  //   let scale = 1
+
+  //   if (scrollY <= 0) {
+  //     scale = 1 + Math.abs(scrollY / imageHeight)
+  //   }
+
+  //   let result = {
+  //     zIndex,
+  //     paddingTop,
+  //     height,
+  //     backgroundImage: `url(${pic})`,
+  //     transform: `scale(${scale})translateZ(${translateZ}px)`,
+  //   }
+
+  //   setBgImageStyle(result)
+  // }, [imageHeight, maxTranslateY, pic, scrollY])
+
+  const scrollStyle = useMemo(() => {
     const bottom = 0
-    setScrollStyle({
+    return {
       top: `${imageHeight}px`,
-      bottom
-    })
+      bottom,
+    }
   }, [imageHeight])
 
-  /** 
-   * @type {*}
-   * @description 初始化 header 
-   */
-  const initBgImageStyle = useCallback(() => {
+  const init = useCallback(() => {
+    setImageHeight(bgImage.current?.clientHeight || 0)
+    setMaxTranslateY(imageHeight - RESERVED_HEIGHT)
+    console.log(maxTranslateY)
+  }, [imageHeight, maxTranslateY])
+
+  useEffect(() => {
+    init()
+  }, [init])
+  
+  useEffect(() => {
     let zIndex = 0
     let paddingTop = '70%'
     let height = '0'
     let translateZ = 0
+    console.log(scrollY)
 
     if (scrollY > maxTranslateY) {
       zIndex = 10
@@ -64,9 +117,9 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
       translateZ = 1
     }
 
-    let scale  = 1
+    let scale = 1
 
-    if (scrollY < 0) {
+    if (scrollY <= 0) {
       scale = 1 + Math.abs(scrollY / imageHeight)
     }
 
@@ -79,22 +132,22 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
     }
 
     setBgImageStyle(result)
-  }, [scrollY, maxTranslateY, pic, imageHeight])
-
-  /** 
-   * @type {*}
-   * @description 初始化
-   */
-  const init = useCallback(() => {
-    setImageHeight(bgImage.current?.clientHeight || 0)
-    setMaxTranslateY(imageHeight - RESERVED_HEIGHT)
-  }, [bgImage, imageHeight])
-
-  useEffect(() => {
-    init()
-    initBgImageStyle()
-    initScrollStyle()
-  }, [init, initBgImageStyle, initScrollStyle])
+    return () => {
+      scale = 1
+      // setBgImageStyle({
+      //   zIndex: 0,
+      //   paddingTop: '70%',
+      //   height: 0,
+      //   scale: 1,
+      //   translateZ: 0,
+      // })
+      zIndex = 0
+      paddingTop = '70%'
+      height = '0'
+      translateZ = 0
+      setScrollY(0)
+    }
+  }, [imageHeight, maxTranslateY, pic, scrollY])
 
   return (
     <MusicListDivAlias>
@@ -113,7 +166,12 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
         </div>
         <div className="filter" style={filterStyle}></div>
       </div>
-      <Scroll className="list" style={scrollStyle} setScroll={onScroll}>
+      <Scroll
+        className="list"
+        options={{ click: true, probeType: 3 }}
+        style={scrollStyle}
+        setScroll={onScroll}
+      >
         <div className="song-list-wrapper">
           <SongList songs={songs}></SongList>
         </div>
