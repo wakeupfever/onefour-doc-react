@@ -37,9 +37,10 @@ const Scroll: React.FC<ScrollProps> = ({ options = { click: true, probeType: 0 }
       })
     }
     return () => {
-      scrollVal.current?.destroy()
+      // scrollVal.current?.destroy()
+      scrollVal.current = undefined
     }
-  }, [options, setScroll])
+  }, [setScroll, options])
 
   return (
     <div className={className} ref={wrapperRef} style={style}>
