@@ -2,7 +2,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom'
 import styled, { ThemeProvider } from 'styled-components'
-import { theme } from '~/assets/styles'
+import { theme, ThemePropStyled } from '~/assets/styles'
 
 const Header = lazy(() => import('~/components/header/index'))
 
@@ -21,7 +21,7 @@ export const DivAlias = styled.div`
   display: flex;
   height: 44px;
   line-height: 44px;
-  font-size: ${(props: any) => props.theme.$fontSizeMedium};
+  font-size: ${(props: ThemePropStyled) => props.theme.$fontSizeMedium};
 
   .tab-item {
     flex: 1;
@@ -29,12 +29,12 @@ export const DivAlias = styled.div`
 
     .tab-link {
       padding-bottom: 5px;
-      color: ${(props: any) => props.theme.$colorTextL};
+      color: ${(props: ThemePropStyled) => props.theme.$colorTextL};
     }
 
     .router-link-active {
-      color: ${(props: any) => props.theme.$colorTheme};
-      border-bottom: 2px solid ${(props: any) => props.theme.$colorTheme};
+      color: ${(props: ThemePropStyled) => props.theme.$colorTheme};
+      border-bottom: 2px solid ${(props: ThemePropStyled) => props.theme.$colorTheme};
     }
   }
 `

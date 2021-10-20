@@ -13,14 +13,14 @@ interface ScrollProps {
     click: boolean
     probeType: number
   }
-  style?: any
+  style?: { [key: string]: string | number }
   className?: string
   setScroll: Function
 }
 
 BScroll.use(ObserveDOM)
 
-const Scroll: React.FC<ScrollProps> = ({ options = { click: true, probeType: 0 }, setScroll, className = '', style = null, children }) => {
+const Scroll: React.FC<ScrollProps> = ({ options = { click: true, probeType: 0 }, setScroll, className = '', style = {}, children }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const scrollVal = useRef<BScrollConstructor>()
   useEffect(() => {

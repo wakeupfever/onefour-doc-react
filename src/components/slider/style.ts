@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { ThemePropStyled } from '~/assets/styles'
 
 export const SliderDivAlias = styled.div`
   min-height: 1px;
@@ -34,11 +35,11 @@ export const SliderDivAlias = styled.div`
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: ${(props: any) => props.theme.$colorTextL};
+      background: ${(props: ThemePropStyled) => props.theme.$colorTextL};
       &.active {
         width: 20px;
         border-radius: 5px;
-        background: ${(props: any) => props.theme.$colorTextLl};
+        background: ${(props: ThemePropStyled) => props.theme.$colorTextLl};
       }
     }
   }

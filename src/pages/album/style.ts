@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { ThemePropStyled } from '~/assets/styles'
 
 export const AlbumDivAlias = styled.div`
   position: fixed;
@@ -7,5 +8,5 @@ export const AlbumDivAlias = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background: ${(props: any) => props.theme.$colorBackground};
+  background: ${(props: ThemePropStyled) => props.theme.$colorBackground};
 `

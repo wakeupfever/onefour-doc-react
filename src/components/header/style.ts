@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { $bgImage } from '~/assets/styles'
+import { $bgImage, ThemePropStyled } from '~/assets/styles'
 import logo from '~/assets/images/logo@2x.png'
 console.log(logo)
 
 export const DivAlias = styled.div`
   height: 44px;
   text-align: center;
-  color: ${(props: any) => props.theme.$colorTheme};
+  color: ${(props: ThemePropStyled) => props.theme.$colorTheme};
   font-size: 0;
   .icon {
     display: inline-block;
@@ -22,7 +22,7 @@ export const DivAlias = styled.div`
     display: inline-block;
     vertical-align: top;
     line-height: 44px;
-    font-size: ${(props: any) => props.theme.$fontSizeLarge};
+    font-size: ${(props: ThemePropStyled) => props.theme.$fontSizeLarge};
   }
   .mine {
     position: absolute;
@@ -31,8 +31,8 @@ export const DivAlias = styled.div`
     .icon-mine {
       display: block;
       padding: 12px;
-      font-size: ${(props: any) => props.theme.$fontSizeLargeX};
-      color: ${(props: any) => props.theme.$colorTheme};
+      font-size: ${(props: ThemePropStyled) => props.theme.$fontSizeLargeX};
+      color: ${(props: ThemePropStyled) => props.theme.$colorTheme};
     }
   }
 `

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
+import { ThemePropStyled } from '~/assets/styles'
 
-export const RecommendDivAlias = styled.div`
+export const RecommendDivAlias = styled.div<{ fontSize: number }>`
   position: fixed;
   width: 100%;
   top: 88px;
@@ -28,8 +29,8 @@ export const RecommendDivAlias = styled.div`
         height: 65px;
         line-height: 65px;
         text-align: center;
-        font-size: ${(props: any) => props.theme.$fontSizeMedium};
-        color: ${(props: any) => props.theme.$colorTheme};
+        font-size: ${(props: ThemePropStyled) => props.theme.$fontSizeMedium};
+        color: ${(props: ThemePropStyled) => props.theme.$colorTheme};
       }
       .item {
         display: flex;
@@ -49,14 +50,14 @@ export const RecommendDivAlias = styled.div`
           flex: 1;
           line-height: 20px;
           overflow: hidden;
-          font-size: ${(props: any) => props.theme.$fontSizeMedium};
+          font-size: ${(props: ThemePropStyled) => props.theme.$fontSizeMedium};
         }
         .name {
           margin-bottom: 10px;
-          color: ${(props: any) => props.theme.$colorText};
+          color: ${(props: ThemePropStyled) => props.theme.$colorText};
         }
         .title {
-          color: ${(props: any) => props.theme.$colorTextD};
+          color: ${(props: ThemePropStyled) => props.theme.$colorTextD};
         }
       }
     }
