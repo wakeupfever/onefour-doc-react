@@ -18,20 +18,20 @@ const RESERVED_HEIGHT = 40
 const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
   const history = useHistory()
 
-  const [imageHeight, setImageHeight] = useState<number>(0)
+  const bgImage = useRef<HTMLDivElement>(null)
+  const [scrollY, setScrollY] = useState<number>(0)
   const [maxTranslateY, setMaxTranslateY] = useState<number>(0)
-  
-  const init = useCallback(() => {
-    setImageHeight(bgImage.current?.clientHeight || 0)
-    setMaxTranslateY(imageHeight - RESERVED_HEIGHT)
-    console.log(maxTranslateY, imageHeight)
-  }, [imageHeight, maxTranslateY])
+  const [imageHeight, setImageHeight] = useState<number>(0)
   
   useEffect(() => {
-    init()
-  }, [init])
+    setImageHeight(bgImage.current?.clientHeight || 0)
+    setMaxTranslateY(imageHeight - RESERVED_HEIGHT)
 
-  const [scrollY, setScrollY] = useState<number>(0)
+    return () => {
+      setImageHeight(0)
+      setMaxTranslateY(0)
+    }
+  }, [imageHeight, maxTranslateY])
   
   const bgImageStyle = useMemo(() => {
     let zIndex = 0
@@ -64,14 +64,14 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
     return result
   }, [imageHeight, maxTranslateY, pic, scrollY])
 
-  const bgImage = useRef<HTMLDivElement>(null)
-
   const playBtnStyle = useMemo(() => {
     let display = ''
     if (scrollY >= maxTranslateY) {
       display = 'none'
     }
-    return { display }
+    return {
+      display,
+    }
   }, [maxTranslateY, scrollY])
 
   const filterStyle = useMemo(() => {
@@ -85,17 +85,13 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
   }, [imageHeight, maxTranslateY, scrollY])
 
   const scrollStyle = useMemo(() => {
-    const bottom = 0
+    
+    const bottom = '0'
     return {
       top: `${imageHeight}px`,
       bottom,
     }
   }, [imageHeight])
-
-  const onScroll = useCallback((pos: ScrollPos) => {
-    setScrollY(-pos.y)
-    console.log(pos)
-  }, [])
   
   const handleGoBack = useCallback(() => {
     history.push('/recommend')
@@ -104,6 +100,12 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
   const handleRandom = useCallback(() => {
     console.log('random')
   }, [])
+
+  const handleOnScroll = useCallback((pos: ScrollPos) => {
+    console.log(pos, scrollY)
+    setScrollY(() => -pos.y + scrollY)
+  }, [scrollY])
+
   return (
     <MusicListDivAlias>
       <div className="back" onClick={handleGoBack}>
@@ -125,7 +127,7 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
         className="list"
         options={{ click: true, probeType: 3 }}
         style={scrollStyle}
-        setScroll={onScroll}
+        onScroll={handleOnScroll}
       >
         <div className="song-list-wrapper">
           <SongList songs={songs}></SongList>

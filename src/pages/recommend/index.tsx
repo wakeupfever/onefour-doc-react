@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import storage from 'good-storage'
 import { useHistory, useLocation } from 'react-router-dom'
+import { forceCheck } from 'react-lazyload'
 import { ALBUM_KEY } from '~/assets/ts/constant'
 import { SlidersItem, Slider } from '~/components/slider'
 import Scroll from '~/components/base/scroll'
@@ -14,10 +15,10 @@ export interface AlbumsItem {
 const Recommend: React.FC = (): JSX.Element => {
   const [slider, setSlider] = useState<SlidersItem[]>([])
   const [albums, setAlbums] = useState<AlbumsItem[]>([])
-  const [scrollInfo, setScrollInfo] = useState<number>(0)
+  // const [scrollInfo, setScrollInfo] = useState<number>(0)
   const history = useHistory()
   const params = useLocation()
-  console.log(scrollInfo)
+  // console.log(scrollInfo)
   
   /** 
    * @type {*}
@@ -60,7 +61,7 @@ const Recommend: React.FC = (): JSX.Element => {
 
   return (
     <RecommendDivAlias className="recommend">
-      <Scroll setScroll={setScrollInfo} className="recommend-content">
+      <Scroll options={{ click: true, probeType: 3 }} onScroll={forceCheck} className="recommend-content">
         <div>
           <div className="slider-wrapper">
             <div className="slider-content">

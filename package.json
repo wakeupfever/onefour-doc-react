@@ -106,6 +106,7 @@
     "@types/react-router-dom": "^5.1.7",
     "eslint-plugin-react-hooks": "^4.2.0",
     "react-app-rewire-alias": "^1.0.2",
-    "react-app-rewired": "^2.1.8"
+    "react-app-rewired": "^2.1.8",
+    "react-lazyload": "^3.2.0"
   }
 }

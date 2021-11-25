@@ -29,6 +29,10 @@ export const MusicListDivAlias = styled.div`
     line-height: 40px;
     font-size: ${(props: ThemePropStyled) => props.theme.$fontSizeLarge};
     color: ${(props: ThemePropStyled) => props.theme.$colorText};
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 40px;
   }
   .bg-image {
     position: relative;
