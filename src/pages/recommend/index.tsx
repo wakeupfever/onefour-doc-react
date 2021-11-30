@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import storage from 'good-storage'
 import { useHistory, useLocation } from 'react-router-dom'
-import { forceCheck } from 'react-lazyload'
 import { ALBUM_KEY } from '~/assets/ts/constant'
 import { SlidersItem, Slider } from '~/components/slider'
 import Scroll from '~/components/base/scroll'
@@ -61,7 +60,7 @@ const Recommend: React.FC = (): JSX.Element => {
 
   return (
     <RecommendDivAlias className="recommend">
-      <Scroll options={{ click: true, probeType: 3 }} onScroll={forceCheck} className="recommend-content">
+      <Scroll click={true} probeType={3} className="recommend-content">
         <div>
           <div className="slider-wrapper">
             <div className="slider-content">

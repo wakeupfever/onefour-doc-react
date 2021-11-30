@@ -1,26 +1,31 @@
 import BScroll from '@better-scroll/core'
 import ObserveDOM from '@better-scroll/observe-dom'
 import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll'
-import React, { useRef, useEffect, useState, forwardRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 
 export interface ScrollPos {
-  x: number
-  y: number
+  x: number;
+  y: number;
 }
 
 interface ScrollProps {
-  options?: {
-    click: boolean
-    probeType: number
-  }
-  style?: { [key: string]: string | number }
-  className?: string
-  onScroll?: Function
+  className: string;
+  click?: true;
+  probeType: number;
+  style?: { [key: string]: string | number };
+  onScroll?: Function;
 }
 
 BScroll.use(ObserveDOM)
 
-const Scroll: React.FC<ScrollProps> = forwardRef(({ options = { click: true, probeType: 0 }, onScroll, className = '', style = {}, children }) => {
+const Scroll: React.FC<ScrollProps> = ({
+  click,
+  probeType,
+  onScroll,
+  className,
+  style,
+  children,
+}) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [scrollVal, setScrollVal] = useState<BScrollConstructor>()
   useEffect(() => {
@@ -28,14 +33,15 @@ const Scroll: React.FC<ScrollProps> = forwardRef(({ options = { click: true, pro
       (wrapperRef as React.MutableRefObject<HTMLDivElement>).current,
       {
         observeDOM: true,
-        ...options,
+        click,
+        probeType,
       }
     )
     setScrollVal(scroll)
     return () => {
-      setScrollVal(null as any)
+      setScrollVal(undefined)
     }
-  }, [options])
+  }, [click, probeType])
 
   useEffect(() => {
     if (!scrollVal) return
@@ -46,10 +52,10 @@ const Scroll: React.FC<ScrollProps> = forwardRef(({ options = { click: true, pro
   }, [scrollVal, onScroll])
 
   return (
-    <div className={className} ref={wrapperRef} style={style}>
+    <div className={className} style={style} ref={wrapperRef}>
       {children}
     </div>
   )
-})
+}
 
 export default Scroll

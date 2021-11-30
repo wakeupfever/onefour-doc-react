@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { SongItem } from '~/pages/album'
-import Scroll, { ScrollPos } from '../base/scroll'
+import Scroll, { ScrollPos } from '../base/scroll/index'
 import SongList from '../base/songList'
 import { MusicListDivAlias } from './style'
 
@@ -85,7 +85,6 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
   }, [imageHeight, maxTranslateY, scrollY])
 
   const scrollStyle = useMemo(() => {
-    
     const bottom = '0'
     return {
       top: `${imageHeight}px`,
@@ -103,7 +102,7 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
 
   const handleOnScroll = useCallback((pos: ScrollPos) => {
     console.log(pos, scrollY)
-    setScrollY(() => -pos.y + scrollY)
+    setScrollY(() => -pos.y)
   }, [scrollY])
 
   return (
@@ -124,10 +123,11 @@ const MusicList: React.FC<MusicListProps> = ({ title, songs, pic }) => {
         <div className="filter" style={filterStyle}></div>
       </div>
       <Scroll
-        className="list"
-        options={{ click: true, probeType: 3 }}
-        style={scrollStyle}
+        click={true}
+        probeType={3}
         onScroll={handleOnScroll}
+        className="list"
+        style={scrollStyle}
       >
         <div className="song-list-wrapper">
           <SongList songs={songs}></SongList>
