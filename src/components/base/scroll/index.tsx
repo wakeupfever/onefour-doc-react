@@ -18,14 +18,7 @@ interface ScrollProps {
 
 BScroll.use(ObserveDOM)
 
-const Scroll: React.FC<ScrollProps> = ({
-  click,
-  probeType,
-  onScroll,
-  className,
-  style,
-  children,
-}) => {
+const Scroll: React.FC<ScrollProps> = ({ click = true, probeType = 0, onScroll = () => {}, className, style, children }) => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [scrollVal, setScrollVal] = useState<BScrollConstructor>()
   useEffect(() => {
@@ -45,7 +38,7 @@ const Scroll: React.FC<ScrollProps> = ({
 
   useEffect(() => {
     if (!scrollVal) return
-    scrollVal.on('scroll', onScroll as Function)
+    scrollVal.on('scroll', onScroll)
     return () => {
       scrollVal.off('scroll', onScroll)
     }
