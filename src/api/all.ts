@@ -24,3 +24,7 @@ export const processSongs = (songs: SongItem[]) => {
     })
   })
 } 
+
+export const getSingerList = () => get('/api/getSingerList')
+
+export const getSingerDetail = ({ mid }: { [key: string]: string | number }) => get('/api/getSingerDetail', { mid })
