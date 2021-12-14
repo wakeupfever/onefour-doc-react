@@ -1,19 +1,21 @@
 import BScroll from '@better-scroll/core'
 import ObserveDOM from '@better-scroll/observe-dom'
 import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll'
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, ReactNode, ForwardedRef } from 'react'
 
 export interface ScrollPos {
   x: number;
   y: number;
 }
 
-interface ScrollProps {
-  className: string;
-  click?: true;
-  probeType: number;
-  style?: { [key: string]: string | number };
-  onScroll?: Function;
+export interface ScrollProps {
+  className: string
+  click?: true
+  probeType: number
+  style?: { [key: string]: string | number }
+  onScroll?: Function
+  children: ReactNode
+  shortRef?: ForwardedRef<HTMLElement>
 }
 
 BScroll.use(ObserveDOM)

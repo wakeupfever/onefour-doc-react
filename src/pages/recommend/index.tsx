@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import storage from 'good-storage'
 import { useHistory, useLocation } from 'react-router-dom'
 import { ALBUM_KEY } from '~/assets/ts/constant'

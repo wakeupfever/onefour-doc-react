@@ -5,13 +5,12 @@ import { SINGER_KEY } from '~/assets/ts/constant'
 import { SingerDivAlias } from './style'
 import IndexList from '~/components/indexList'
 
-export interface SingerItemGroupItem { pic: string, name: string }
+export interface SingerItemGroupItem { pic: string, name: string, id: string | number, mid: string }
 export interface SingerItem { title: string, list: SingerItemGroupItem[] }
 
 const Singer: React.FC = () => {
   const [singers, setSingers] = useState<SingerItem[]>([])
   const [selectedSinger, setSelectedSinger] = useState<SingerItem>()
-  console.log(singers)
 
   const init = useCallback(async () => {
     const { singers } = await getSingerList()
