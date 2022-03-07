@@ -17,10 +17,13 @@ const ForwardRefIndexListDivAlias = forwardRef<HTMLDivElement, ScrollProps>(
   )
 )
 
-const IndexList: React.FC<IndexListProps> = ({ data }) => {
-  const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed({ data })
-  const { shortcutList, scrollRef, onShortcutTouchStart, onShortcutTouchMove } = useShortcut({ data }, groupRef)
-  
+const IndexList: React.FC<IndexListProps> = ({ data }): JSX.Element => {
+  const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed(
+    { data }
+  )
+  const { shortcutList, scrollRef, onShortcutTouchStart, onShortcutTouchMove } =
+    useShortcut({ data }, groupRef)
+
   useEffect(() => {
     console.log(scrollRef)
   }, [fixedTitle, scrollRef])

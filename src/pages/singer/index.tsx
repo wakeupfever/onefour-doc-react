@@ -8,7 +8,7 @@ import IndexList from '~/components/indexList'
 export interface SingerItemGroupItem { pic: string, name: string, id: string | number, mid: string }
 export interface SingerItem { title: string, list: SingerItemGroupItem[] }
 
-const Singer: React.FC = () => {
+const Singer: React.FC = (): JSX.Element => {
   const [singers, setSingers] = useState<SingerItem[]>([])
   const [selectedSinger, setSelectedSinger] = useState<SingerItem>()
 
@@ -21,9 +21,12 @@ const Singer: React.FC = () => {
     init()
   }, [init])
 
-  const selectSinger = useCallback((singer: SingerItem) => {
-    setSelectedSinger(() => ({ ...selectedSinger, ...singer }))
-  }, [selectedSinger])
+  const selectSinger = useCallback(
+    (singer: SingerItem) => {
+      setSelectedSinger(() => ({ ...selectedSinger, ...singer }))
+    },
+    [selectedSinger]
+  )
 
   const cacheSinger = useCallback((singer: SingerItem) => {
     storage.session.set(SINGER_KEY, singer)

@@ -10,7 +10,7 @@ export interface SongItem {
   [key: string]: string;
 }
 
-const Album: React.FC = () => {
+const Album: React.FC = (): JSX.Element => {
   const [songs, setSongs] = useState<SongItem[]>([])
   const [cached, setCached] = useState<AlbumsItem>({
     id: '',
